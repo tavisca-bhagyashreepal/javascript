@@ -1,77 +1,117 @@
-window.onload= function(){
+window.onload= function()
+{
+	var btnhotel = document.getElementById("hotel");
+	btnhotel.onclick=display;
+}
 
-//HOTEL	
-var btnhotel = document.getElementById("hotel");
-btnhotel.onclick=function() {
-var xmlhttp;
-if (window.XMLHttpRequest)
+function display()
 {
-xmlhttp=new XMLHttpRequest();
-}
-else
-{
-xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
+ 		alert("In hotel");
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		{
+			xmlhttp=new XMLHttpRequest();
+		}
+		else
+		{
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
 
 /*var parent = document.getElementById("div1");
 while(parent.firstChild)
 {
 	parent.removeChild(parent.firstChild);
 }*/
+		xmlhttp.onreadystatechange=function()
+		{
+			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+				var obj = JSON.parse(xmlhttp.responseText);
+				//document.getElementById("").innerHTML=xmlhttp.responseText;
+				var i=0;
+					//document.getElementById("mytext1").innerHTML= obj.deals[0].hotelId + "<br>" +obj.deals[0].hotelName + "<br>" +obj.deals[0].allowedCheckInDays + "<br>";
+					
 
-xmlhttp.onreadystatechange=function()
-{
+					/*var div = document.createElement("div");
+					div.id= "div1";
+					div.className ='div-style';
+					div.className = div.className + 'div-format'; 
+					var divBody =document.getElementById("heading");
+					divBody.appendChild(div);*/
 
-if (xmlhttp.readyState==4 && xmlhttp.status==200)
-{
-//document.getElementById("mytext2").innerHTML=xmlhttp.responseText;
-var obj = JSON.parse(xmlhttp.responseText);
-var i=0;
-	//document.getElementById("mytext1").innerHTML= obj.deals[0].hotelId + "<br>" +obj.deals[0].hotelName + "<br>" +obj.deals[0].allowedCheckInDays + "<br>";
-	
+				while(obj.deals[i]!='undefined')
+				{
+						alert("In while");
+						var divtag=document.getElementById("para");
 
-	var div = document.createElement("div");
-	div.id= "div1";
-	document.body.appendChild(div);
-
-	while(obj.deals[i]!='undefined'){
-
-	var element =document.createElement("div");
-	if(i%2==0){
-		element.style.backgroundColor="pink";
+					/*var element =document.createElement("div");
+					if(i%2==0){
+						element.className = 'div-style-alternate';
+					}
+					else
+						element.className = 'div-style';
+					//div.className = div.className + 'div-format'; 
+					div.classList.add('div-format');
+					var divParent = document.getElementById('div1');
+					divParent.appendChild(element);
+					
+					element.innerHTML+=template(i,hotelId,hotelName,title,description,imageUrl,divParent);
+					/*element.innerHTML = "HotelId:" + " " + obj.deals[i].hotelId + "<br>"+ " " + "HotelName:" + " " + obj.deals[i].hotelName + "<br>" +
+					 "Title:" + obj.deals[i].title +"<br>" + "Description:" + " "+ obj.deals[i].description+"<br>" + "Image:" + " "+obj.deals[i].imageUrl
+					 
+					 showImage(i,divParent,obj.deals[i].imageUrl,100,100,"image not found") + "<br>"+"<br>"; */
+					var hotelId =obj.deals[i].hotelId;
+					var hotelName= obj.deals[i].hotelName;
+					var title= obj.deals[i].title;
+					var description =obj.deals[i].description;
+					var imageUrl = obj.deals[i].imageUrl;
+					
+					divtag.innerHTML=divtag.innerHTML+template(hotelId,hotelName,title,description,imageUrl);
+					i=i+1;
+					
+				}
+		}
+		xmlhttp.open("GET","http://dev-mystique.tavisca.com/api/deals/all?token=cpqeivohl4c2jmfejew1ciic&&$filter=Type eq 'hotel'",true);
+		xmlhttp.send();
 	}
-	else
-		element.style.backgroundColor="lightyellow";
-	var divParent = document.getElementById('div1');
-	divParent.appendChild(element);
-
-	element.innerHTML = "HotelId:" + " " + obj.deals[i].hotelId + "<br>"+ " " + "HotelName:" + " " + obj.deals[i].hotelName + "<br>" +
-	 "Title:" + obj.deals[i].title +"<br>" + "Description:" + " "+ obj.deals[i].description+"<br>" + "Image:" + " "+
-	 
-	 showImage(element,divParent,obj.deals[i].imageUrl,100,100,"image not found") + "<br>"+"<br>"; 
-	i=i+1;
-}
-}
 }
 
-function showImage(element,divParent,src,width,height,alt) {
+function template(hotelId,hotelName,title,description,imageUrl)
+{	
+	alert("In tem");
+	var templateFormat = "<div class='deals'><h3 class='dealsTitle'>" + hotelName + "</h3><p class='info'>" + Description + "</p><img class='dealsImage' src=" + imgUrl +" alt=\"Image not Loaded\">a</div>";
+	return templateFormat;
+}
+
+
+
+    
+
+/*function showImage(j,divParent,src,width,height,alt) {
+	var div =document.createElement("div");
+	if(j%2==0){
+	div.className = 'div-style-alternate';
+	}
+	else div.className = 'div-style';
+
+	divParent.appendChild(div);
     var img = document.createElement("img");
     img.src = src;
     img.width=width;
     img.height=height;
     img.alt=alt;
+    div.appendChild(img);
  	//document.getElementById("mytext1").appendChild(img);
-    divParent.appendChild(img);
-    divParent.style.backgroundColor=element.style.backgroundColor;
-}
-xmlhttp.open("GET","http://dev-mystique.tavisca.com/api/deals/all?token=wsvn4vemocpvfqoouy2434ou&&$filter=Type eq 'hotel'",true);
+    
+   
+}*/
 
-xmlhttp.send();
-};
+
 
 
 //CAR
-var btncar= document.getElementById("car");
+/*var btncar= document.getElementById("car");
 btncar.onclick= function() {
 var xmlhttp;
 if (window.XMLHttpRequest)
@@ -81,7 +121,7 @@ xmlhttp=new XMLHttpRequest();
 else
 {
 xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
+}*/
 
 /*
 var parent = document.getElementById("div1");
@@ -92,7 +132,7 @@ while(parent.firstChild)
 */
 
 
-xmlhttp.onreadystatechange=function()
+/*xmlhttp.onreadystatechange=function()
 {
 
 if (xmlhttp.readyState==4 && xmlhttp.status==200)
@@ -101,22 +141,22 @@ if (xmlhttp.readyState==4 && xmlhttp.status==200)
 var obj = JSON.parse(xmlhttp.responseText);
 var i=0;
 	//document.getElementById("mytext1").innerHTML= obj.deals[0].hotelId + "<br>" +obj.deals[0].hotelName + "<br>" +obj.deals[0].allowedCheckInDays + "<br>";
-	
-
-
-
 	var div = document.createElement("div");
 	div.id= "div1";
-	document.body.appendChild(div);
+	div.className ='div-style';
+	div.className = div.className + 'div-format'; 
+	var divBody =document.getElementById("heading");
+	divBody.appendChild(div);
 
 	while(obj.deals[i]!='undefined'){
 
 	var element =document.createElement("div");
 	if(i%2==0){
-		element.style.backgroundColor="pink";
+		element.className ='div-style-alternate';
 	}
 	else
-		element.style.backgroundColor="lightblue";
+		element.className = 'div-style';
+	element.classList.add('div-format1');
 	var divParent = document.getElementById("div1");
 	divParent.appendChild(element);
 	element.innerHTML = "RentalCompanyName:" + " " + obj.deals[i].rentalCompanyName+ "<br>"+ " " + "RentalCompanyCode:" + " " + obj.deals[i].rentalCompanyCode + "<br>" +
@@ -127,7 +167,7 @@ var i=0;
 }
 }
 
-xmlhttp.open("GET","http://dev-mystique.tavisca.com/api/deals/all?token=wsvn4vemocpvfqoouy2434ou&&$filter=Type eq 'car'",true);
+xmlhttp.open("GET","http://dev-mystique.tavisca.com/api/deals/all?token=cpqeivohl4c2jmfejew1ciic&&$filter=Type eq 'car'",true);
 
 xmlhttp.send();
 };
@@ -138,3 +178,4 @@ btnRefresh.onclick= function (){
     window.location.reload();
 } 
 }
+*/
